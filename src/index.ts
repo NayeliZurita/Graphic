@@ -16,6 +16,7 @@ graphics = canvas.getContext('2d');
 let cv: CvHLines;
 let obj: Obj3D;
 let ang: number=0;
+let pza1:number=0;
 
 function leerArchivo(e:any) {
   var archivo = e.target.files[0];
@@ -79,12 +80,11 @@ function decrDistFunc() {
 }
 
 function pza1DerFunc() {
-  let af = 10;
+let af = 10;
  	
-	Rota3D.initRotate( obj.w[100], obj.w[90], af*Math.PI/180);	
+	Rota3D.initRotate( obj.w[301], obj.w[307], af*Math.PI/180);	
 	
-  //for (let i = 201; i <= 238; i++){
-  for (let i = 201; i <= 238; i++){
+  for (let i = 301; i <= 324; i++){
     obj.w[i] = Rota3D.rotate(obj.w[i]);
 	}
 	cv.setObj(obj);
@@ -92,14 +92,14 @@ function pza1DerFunc() {
 }
 
 function pza1IzqFunc() {
-  let af = -10;
+ let af = -10;
  	
-	Rota3D.initRotate( obj.w[100], obj.w[90], af*Math.PI/180);	
+	Rota3D.initRotate( obj.w[301], obj.w[307], af*Math.PI/180);	
 
-	//for (let i = 201; i <= 238; i++){
-  for (let i = 201; i <= 238; i++){
+  for (let i = 301; i <= 324; i++){
     obj.w[i] = Rota3D.rotate(obj.w[i]);
 	}
+ 
 	cv.setObj(obj);
   cv.paint();	
 }
@@ -109,13 +109,16 @@ function pza12DerFunc() {
   Rota3D.initRotate(obj.w[29], obj.w[30], af * Math.PI / 180);
 	
   //for (let i = 101; i <= 140; i++){
-  for (let i = 101; i <= 140; i++){
+  for (let i = 201; i <= 238; i++){
     obj.w[i] = Rota3D.rotate(obj.w[i]);
   }
   //for (let i = 201; i <= 238; i++){
-  for (let i = 201; i <= 238; i++){
+  for (let i = 301; i <= 324; i++){
     obj.w[i] = Rota3D.rotate(obj.w[i]);
 	}
+  for (let i = 101; i <= 140; i++){
+    obj.w[i] = Rota3D.rotate(obj.w[i]);
+  }
 	cv.setObj(obj);
   cv.paint();	
 }
@@ -126,16 +129,61 @@ function pza12IzqFunc() {
 	Rota3D.initRotate( obj.w[29], obj.w[30], af*Math.PI/180);	
 	
   //for (let i = 101; i <= 140; i++){
-  for (let i = 101; i <= 140; i++){
-    obj.w[i] = Rota3D.rotate(obj.w[i]);
-	}
-  //for (let i = 201; i <= 238; i++){
   for (let i = 201; i <= 238; i++){
     obj.w[i] = Rota3D.rotate(obj.w[i]);
 	}
+  //for (let i = 201; i <= 238; i++){
+  for (let i = 301; i <= 324; i++){
+    obj.w[i] = Rota3D.rotate(obj.w[i]);
+	}
+  
+  for (let i = 101; i <= 140; i++){
+      obj.w[i] = Rota3D.rotate(obj.w[i]);
+    }
   
 	cv.setObj(obj);
   cv.paint();	
+}
+function AbrirGarra() {
+  let af = 10;
+   if(pza1<=2){
+    Rota3D.initRotate( obj.w[301], obj.w[307], -af*Math.PI/-180);	
+   for (let i = 301; i <= 312; i++){
+     obj.w[i] = Rota3D.rotate(obj.w[i]);
+   }
+   cv.setObj(obj);
+   cv.paint();	
+
+   Rota3D.initRotate( obj.w[313], obj.w[319], af*Math.PI/-180);	
+  for (let i = 313; i <= 324; i++){
+    obj.w[i] = Rota3D.rotate(obj.w[i]);
+	}
+	cv.setObj(obj);
+  cv.paint();	
+  pza1++;
+  console.log(pza1);
+  }else{alert('No se puede abrir mas ');}	
+}
+
+function CerrarGarra(){
+  let af = -10;
+  if(pza1>0 && pza1<=3){
+   Rota3D.initRotate( obj.w[301], obj.w[307], -af*Math.PI/-180);	
+   for (let i = 301; i <= 312; i++){
+     obj.w[i] = Rota3D.rotate(obj.w[i]);
+   }
+   cv.setObj(obj);
+   cv.paint();	
+
+   Rota3D.initRotate( obj.w[313], obj.w[319], af*Math.PI/-180);	
+  for (let i = 313; i <= 324; i++){
+    obj.w[i] = Rota3D.rotate(obj.w[i]);
+	}
+ cv.setObj(obj);
+ cv.paint();	
+ pza1--;
+ console.log(pza1);
+ }else{alert('No se puede cerrar llego a su limite');}
 }
 
 document.getElementById('file-input').addEventListener('change', leerArchivo, false);
@@ -152,6 +200,8 @@ document.getElementById('pza1Izq').addEventListener('click', pza1IzqFunc, false)
 document.getElementById('pza1Der').addEventListener('click', pza1DerFunc, false);
 document.getElementById('pza12Izq').addEventListener('click', pza12IzqFunc, false);
 document.getElementById('pza12Der').addEventListener('click', pza12DerFunc, false);
+document.getElementById('AbrirGarra').addEventListener('click',AbrirGarra,false);
+document.getElementById('CerrarGarra').addEventListener('click',CerrarGarra,false);
 
 let Pix: number, Piy: number;
 let Pfx: number, Pfy: number;
@@ -175,33 +225,6 @@ function makeVizualization(evento: any) {
     Piy = Pfy;
     vp(0.1 * difX, 0 / 50, 1);
     Pix = Pfx;
-    /*if( Piy>Pfy+1 ){
-      phi += SensibilidadY;
-      vp(0, 0.1*, 1);
-      //cv.redibuja(theta, phi, tamanoObjeto);
-      Piy=Pfy;
-    }
-
-    if(Pfy>Piy+1){
-      phi -= SensibilidadY;
-      vp(0,-0.1, 1);
-      //cv.redibuja(theta, phi, tamanoObjeto);
-      Piy=Pfy;
-    }*/
-
-    /*if (Pix > Pfx + 1) {
-      theta += SensibilidadX;
-      vp(0.1, 0, 1);
-      //cv.redibuja(theta, phi, tamanoObjeto);
-      Pix = Pfx;
-    }
-        
-    if (Pfx > Pix + 1) {
-      theta -= SensibilidadX;
-      vp(-0.1, 0, 1);
-      //cv.redibuja(theta, phi, tamanoObjeto);
-      Pix = Pfx;
-    }*/
   }
 }
 
